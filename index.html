@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mi Plata - Con Ahorros</title>
+    <title>Mi Plata - Reset de Categorías</title>
     <style>
         :root {
             --bg-color: #121212;
@@ -16,54 +16,52 @@
             --color-accent: #bb86fc;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: -apple-system, system-ui, sans-serif;
             background-color: var(--bg-color); color: var(--text-main);
             display: flex; flex-direction: column; align-items: center;
-            min-height: 100vh; padding: 20px;
-            padding-top: calc(20px + env(safe-area-inset-top));
+            min-height: 100vh; padding: 15px;
+            padding-top: calc(15px + env(safe-area-inset-top));
         }
 
-        .app-container { width: 100%; max-width: 450px; display: flex; flex-direction: column; gap: 15px; }
+        .app-container { width: 100%; max-width: 450px; display: flex; flex-direction: column; gap: 12px; }
         .card { background-color: var(--card-bg); padding: 18px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
 
-        /* Balances Encabezado */
         .balances-header { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .bal-main { grid-column: span 2; padding: 10px 0; }
+        .bal-main { grid-column: span 2; padding: 10px 0; border-bottom: 1px solid #333; }
         .bal-val { font-size: 2.2rem; font-weight: 800; text-align: center; }
         .bal-label { font-size: 0.7rem; color: var(--text-secondary); text-align: center; text-transform: uppercase; letter-spacing: 1px; }
-        .bal-sub { background: rgba(255,255,255,0.03); border-radius: 15px; padding: 10px; border: 1px solid #333; }
-        .bal-sub .bal-val { font-size: 1.2rem; color: var(--color-ahorro); }
+        .bal-sub { background: rgba(255,255,255,0.03); border-radius: 15px; padding: 10px; border: 1px solid #333; text-align: center; }
 
-        /* Inputs */
-        input {
+        input, select {
             width: 100%; padding: 14px; font-size: 1rem; border-radius: 12px; margin-bottom: 10px;
-            border: 2px solid #333; background: #252525; color: white; outline: none;
+            border: 2px solid #333; background: #252525; color: white; outline: none; appearance: none;
         }
-        input:focus { border-color: var(--color-accent); }
-        #montoInput { font-size: 1.8rem; text-align: center; font-weight: bold; color: var(--color-accent); }
+        #montoInput { font-size: 1.8rem; text-align: center; font-weight: bold; color: var(--color-accent); border-color: #444; }
 
         .botones-container { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-        .btn { padding: 15px 5px; font-size: 0.85rem; font-weight: 800; border: none; border-radius: 12px; color: white; cursor: pointer; }
+        .btn { padding: 16px 5px; font-size: 0.8rem; font-weight: 800; border: none; border-radius: 12px; color: white; cursor: pointer; text-transform: uppercase; }
         .btn-ingreso { background: var(--color-ingreso); }
         .btn-gasto { background: var(--color-gasto); }
         .btn-ahorro { background: var(--color-ahorro); }
-        .btn:active { transform: scale(0.95); }
 
-        /* Reporte */
-        .report-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; margin-bottom: 15px; }
-        .stat-box { padding: 8px; border-radius: 10px; background: #252525; text-align: center; }
+        .filter-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+        .report-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 15px; margin-top: 5px; }
+        .stat-box { padding: 10px 5px; border-radius: 12px; background: #252525; text-align: center; border: 1px solid #333; }
         .stat-label { font-size: 0.6rem; color: var(--text-secondary); text-transform: uppercase; }
-        .stat-val { font-size: 0.9rem; font-weight: bold; }
+        .stat-val { font-size: 0.85rem; font-weight: bold; }
 
-        .history-list { max-height: 250px; overflow-y: auto; }
-        .movimiento { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #2d2d2d; }
-        .mov-detalle { font-weight: 500; font-size: 0.95rem; text-transform: capitalize; }
+        .history-list { max-height: 350px; overflow-y: auto; }
+        .movimiento { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #2d2d2d; }
+        .mov-info { flex-grow: 1; }
+        .mov-cat { font-size: 0.6rem; background: #333; padding: 2px 6px; border-radius: 4px; color: var(--color-accent); margin-right: 5px; text-transform: uppercase; font-weight: bold; }
+        .mov-detalle { font-weight: 600; font-size: 0.95rem; }
         .mov-fecha { font-size: 0.7rem; color: var(--text-secondary); }
 
-        .btn-reset { background: none; border: none; color: #444; font-size: 0.7rem; margin-top: 10px; align-self: center; cursor: pointer; text-decoration: underline; }
+        .btn-delete { background: none; border: none; color: #444; font-size: 1.1rem; margin-left: 15px; cursor: pointer; }
+        .btn-reset { background: none; border: none; color: #333; font-size: 0.7rem; margin-top: 10px; align-self: center; text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -71,37 +69,57 @@
     <div class="app-container">
         <div class="card balances-header">
             <div class="bal-main">
-                <div class="bal-label">Disponible Actual</div>
+                <div class="bal-label">Disponible</div>
                 <div id="balanceTotal" class="bal-val">$ 0</div>
             </div>
             <div class="bal-sub">
-                <div class="bal-label">Ahorro Acumulado</div>
-                <div id="ahorroTotal" class="bal-val" style="text-align: center;">$ 0</div>
+                <div class="bal-label">Ahorrado</div>
+                <div id="ahorroTotal" class="bal-val" style="color: var(--color-ahorro);">$ 0</div>
             </div>
             <div class="bal-sub">
-                <div class="bal-label">Patrimonio Total</div>
-                <div id="patrimonioTotal" class="bal-val" style="color: #fff; text-align: center;">$ 0</div>
+                <div class="bal-label">Patrimonio</div>
+                <div id="patrimonioTotal" class="bal-val">$ 0</div>
             </div>
         </div>
 
         <div class="card">
             <input type="text" id="montoInput" placeholder="0" inputmode="decimal">
-            <input type="text" id="detalleInput" placeholder="Palabra clave (obligatoria)">
+            
+            <select id="categoriaInput">
+                <option value="Sin Categoría">--- Sin Categoría ---</option>
+                <option value="Casa">🏠 Casa</option>
+                <option value="Comida">🍕 Comida</option>
+                <option value="Transporte">🚗 Transporte</option>
+                <option value="Salidas">🎬 Salidas</option>
+                <option value="Ingresos">💰 Ingresos</option>
+            </select>
+
+            <input type="text" id="detalleInput" placeholder="Palabra clave">
+            
             <div class="botones-container">
-                <button class="btn btn-gasto" onclick="registrar('gasto')">− GASTO</button>
-                <button class="btn btn-ahorro" onclick="registrar('ahorro')">💾 AHORRAR</button>
-                <button class="btn btn-ingreso" onclick="registrar('ingreso')">+ INGRESO</button>
+                <button class="btn btn-gasto" onclick="registrar('gasto')">Gasto</button>
+                <button class="btn btn-ahorro" onclick="registrar('ahorro')">Ahorrar</button>
+                <button class="btn btn-ingreso" onclick="registrar('ingreso')">Ingreso</button>
             </div>
         </div>
 
         <div class="card">
-            <h2 style="font-size: 0.9rem; margin-bottom: 10px; color: var(--text-secondary);">📊 REPORTE (MÁX 30 DÍAS)</h2>
-            
-            <div style="margin-bottom: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
-                <input type="date" id="fechaDesde" style="font-size: 0.8rem;" onchange="actualizarReporte()">
-                <input type="date" id="fechaHasta" style="font-size: 0.8rem;" onchange="actualizarReporte()">
+            <div class="filter-group">
+                <input type="date" id="fechaDesde" onchange="actualizarReporte()">
+                <input type="date" id="fechaHasta" onchange="actualizarReporte()">
             </div>
-            <input type="text" id="busquedaClave" placeholder="Buscar palabra clave..." oninput="actualizarReporte()">
+            <div class="filter-group">
+                <select id="filtroCategoria" onchange="actualizarReporte()">
+                    <option value="Todas">Todas las categorías</option>
+                    <option value="Sin Categoría">Sin Categoría</option>
+                    <option value="Casa">Casa</option>
+                    <option value="Comida">Comida</option>
+                    <option value="Transporte">Transporte</option>
+                    <option value="Salidas">Salidas</option>
+                    <option value="Ingresos">Ingresos</option>
+                </select>
+                <input type="text" id="busquedaClave" placeholder="🔍 Buscar..." oninput="actualizarReporte()">
+            </div>
 
             <div class="report-grid">
                 <div class="stat-box">
@@ -121,26 +139,21 @@
             <div id="listaMovimientos" class="history-list"></div>
         </div>
 
-        <button class="btn-reset" onclick="borrarTodo()">Reiniciar App</button>
+        <button class="btn-reset" onclick="borrarTodo()">Resetear App</button>
     </div>
 
     <script>
-        let saldo = parseFloat(localStorage.getItem('saldo_v4')) || 0;
-        let ahorros = parseFloat(localStorage.getItem('ahorros_v4')) || 0;
-        let movimientos = JSON.parse(localStorage.getItem('historial_v4')) || [];
+        // Versión 6.4
+        let saldo = parseFloat(localStorage.getItem('saldo_v6_4')) || 0;
+        let ahorros = parseFloat(localStorage.getItem('ahorros_v6_4')) || 0;
+        let movimientos = JSON.parse(localStorage.getItem('historial_v6_4')) || [];
 
         document.getElementById('fechaHasta').value = new Date().toISOString().split('T')[0];
 
-        // --- LÓGICA DEL SEPARADOR DE MILES EN TIEMPO REAL ---
         const montoInput = document.getElementById('montoInput');
-        montoInput.addEventListener('input', function(e) {
-            let valor = e.target.value.replace(/\D/g, ""); // Elimina lo que no sea número
-            if (valor === "") {
-                e.target.value = "";
-                return;
-            }
-            // Formatea con puntos
-            e.target.value = new Intl.NumberFormat('es-AR').format(parseInt(valor));
+        montoInput.addEventListener('input', (e) => {
+            let valor = e.target.value.replace(/\D/g, "");
+            if (valor !== "") e.target.value = new Intl.NumberFormat('es-AR').format(parseInt(valor));
         });
 
         function formatearMoneda(n) {
@@ -150,77 +163,99 @@
         function actualizarReporte() {
             const desde = document.getElementById('fechaDesde').value;
             const hasta = document.getElementById('fechaHasta').value;
+            const catFiltro = document.getElementById('filtroCategoria').value;
             const clave = document.getElementById('busquedaClave').value.toLowerCase();
 
-            let totalIn = 0, totalOut = 0, totalSave = 0;
             const lista = document.getElementById('listaMovimientos');
             lista.innerHTML = '';
 
-            const filtrados = movimientos.filter(m => {
+            let tIngresos = 0, tGastos = 0, tAhorros = 0;
+
+            for (let i = movimientos.length - 1; i >= 0; i--) {
+                const m = movimientos[i];
                 const fMov = m.timestamp.split('T')[0];
-                return ((!desde || fMov >= desde) && (!hasta || fMov <= hasta)) && m.detalle.toLowerCase().includes(clave);
-            });
+                
+                if (((!desde || fMov >= desde) && (!hasta || fMov <= hasta)) &&
+                    (catFiltro === "Todas" || m.categoria === catFiltro) &&
+                    (m.detalle.toLowerCase().includes(clave))) {
+                    
+                    if (m.tipo === 'ingreso') tIngresos += m.monto;
+                    else if (m.tipo === 'gasto') tGastos += m.monto;
+                    else if (m.tipo === 'ahorro') tAhorros += m.monto;
 
-            filtrados.reverse().forEach(m => {
-                if (m.tipo === 'ingreso') totalIn += m.monto;
-                else if (m.tipo === 'gasto') totalOut += m.monto;
-                else if (m.tipo === 'ahorro') totalSave += m.monto;
+                    const color = m.tipo === 'ingreso' ? 'var(--color-ingreso)' : (m.tipo === 'gasto' ? 'var(--color-gasto)' : 'var(--color-ahorro)');
+                    
+                    const item = document.createElement('div');
+                    item.className = 'movimiento';
+                    item.innerHTML = `
+                        <div class="mov-info">
+                            <div><span class="mov-cat">${m.categoria}</span><span class="mov-detalle">${m.detalle}</span></div>
+                            <div class="mov-fecha">${new Date(m.timestamp).toLocaleDateString()}</div>
+                        </div>
+                        <div style="text-align: right">
+                            <div style="font-weight: 800; color: ${color}">${m.tipo === 'ingreso' ? '+' : '-'} ${formatearMoneda(m.monto)}</div>
+                        </div>
+                        <button class="btn-delete" onclick="eliminarMovimiento(${i})">🗑️</button>
+                    `;
+                    lista.appendChild(item);
+                }
+            }
 
-                let color = m.tipo === 'ingreso' ? 'var(--color-ingreso)' : (m.tipo === 'gasto' ? 'var(--color-gasto)' : 'var(--color-ahorro)');
-                let signo = m.tipo === 'ingreso' ? '+' : '-';
-
-                const item = document.createElement('div');
-                item.className = 'movimiento';
-                item.innerHTML = `
-                    <div><div class="mov-detalle">${m.detalle}</div><div class="mov-fecha">${new Date(m.timestamp).toLocaleDateString()}</div></div>
-                    <div style="font-weight:bold; color: ${color}">${signo} ${formatearMoneda(m.monto)}</div>
-                `;
-                lista.appendChild(item);
-            });
-
-            document.getElementById('resumenIngreso').innerText = formatearMoneda(totalIn);
-            document.getElementById('resumenGasto').innerText = formatearMoneda(totalOut);
-            document.getElementById('resumenAhorro').innerText = formatearMoneda(totalSave);
-            
+            document.getElementById('resumenIngreso').innerText = formatearMoneda(tIngresos);
+            document.getElementById('resumenGasto').innerText = formatearMoneda(tGastos);
+            document.getElementById('resumenAhorro').innerText = formatearMoneda(tAhorros);
             document.getElementById('balanceTotal').innerText = formatearMoneda(saldo);
             document.getElementById('balanceTotal').style.color = saldo >= 0 ? 'var(--color-ingreso)' : 'var(--color-gasto)';
             document.getElementById('ahorroTotal').innerText = formatearMoneda(ahorros);
             document.getElementById('patrimonioTotal').innerText = formatearMoneda(saldo + ahorros);
 
-            localStorage.setItem('saldo_v4', saldo);
-            localStorage.setItem('ahorros_v4', ahorros);
-            localStorage.setItem('historial_v4', JSON.stringify(movimientos));
+            localStorage.setItem('saldo_v6_4', saldo);
+            localStorage.setItem('ahorros_v6_4', ahorros);
+            localStorage.setItem('historial_v6_4', JSON.stringify(movimientos));
         }
 
         function registrar(tipo) {
             const dInput = document.getElementById('detalleInput');
-            
-            // IMPORTANTE: Quitamos los puntos de formato antes de procesar el número
-            const montoLimpio = montoInput.value.replace(/\./g, "");
-            const monto = parseFloat(montoLimpio);
+            const cInput = document.getElementById('categoriaInput');
+            const monto = parseFloat(montoInput.value.replace(/\./g, ""));
             const detalle = dInput.value.trim();
 
-            if (isNaN(monto) || monto <= 0) return alert("Ingresa un monto válido");
-            if (!detalle) return alert("Escribe una palabra clave");
+            if (isNaN(monto) || monto <= 0) return;
+            if (!detalle) return alert("Falta el detalle");
 
-            if (tipo === 'gasto') {
-                saldo -= monto;
-            } else if (tipo === 'ingreso') {
-                saldo += monto;
-            } else if (tipo === 'ahorro') {
-                if(monto > saldo) return alert("No tienes suficiente disponible.");
-                saldo -= monto;
-                ahorros += monto;
+            if (tipo === 'gasto') saldo -= monto;
+            else if (tipo === 'ingreso') saldo += monto;
+            else if (tipo === 'ahorro') {
+                if(monto > saldo) return alert("Saldo insuficiente");
+                saldo -= monto; ahorros += monto;
             }
 
-            movimientos.push({ tipo, monto, detalle, timestamp: new Date().toISOString() });
+            movimientos.push({ tipo, monto, detalle, categoria: cInput.value, timestamp: new Date().toISOString() });
             
+            // RESETEAMOS LOS INPUTS
             montoInput.value = ''; 
             dInput.value = '';
+            cInput.selectedIndex = 0; // VUELVE A "SIN CATEGORÍA"
+            
             actualizarReporte();
         }
 
-        function borrarTodo() { if (confirm("¿Borrar todo el historial?")) { saldo = 0; ahorros = 0; movimientos = []; actualizarReporte(); } }
+        function eliminarMovimiento(index) {
+            if (!confirm("¿Eliminar movimiento?")) return;
+            const m = movimientos[index];
+            if (m.tipo === 'ingreso') saldo -= m.monto;
+            else if (m.tipo === 'gasto') saldo += m.monto;
+            else if (m.tipo === 'ahorro') { saldo += m.monto; ahorros -= m.monto; }
+            movimientos.splice(index, 1);
+            actualizarReporte();
+        }
+
+        function borrarTodo() {
+            if (confirm("Se borrarán todos los datos.")) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
         actualizarReporte();
     </script>
 </body>
